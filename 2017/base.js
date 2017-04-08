@@ -29,11 +29,11 @@ var readInputFile = function() {
     }
 }
 
-var printResult = function(caseNumber, numberOfFlips) {
-    var resultString = 'Case #' + caseNumber + ': ' + numberOfFlips;
+var printResult = function(caseNumber, result) {
+    var resultString = 'Case #' + caseNumber + ': ' + result;
 
-    fs.appendFileSync('./' + fileName + '.out', resultString + '\n');
-    console.log('Case #' + caseNumber + ': ' + numberOfFlips);
+    fs.appendFileSync(fileName + '.out', resultString + '\n');
+    console.log('Case #' + caseNumber + ': ' + result);
 }
 
 main();

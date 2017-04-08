@@ -6,7 +6,7 @@
 
 var fs = require('fs');
 
-var fileName  = 'A-example';
+var fileName  = 'A-small-attempt1';
 var inputFile = fs.readFileSync(fileName + '.in');
 
 var main = function() {
@@ -22,7 +22,7 @@ var main = function() {
 var readInputFile = function() {
     var lines = inputFile.toString().split('\n');
 
-    for (var caseNumber = 1; caseNumber < lines.length; caseNumber++) {
+    for (var caseNumber = 1; caseNumber < lines.length - 1; caseNumber++) {
         var S = lines[caseNumber];
 
         flipPancakes(caseNumber, S.trim());
@@ -31,10 +31,10 @@ var readInputFile = function() {
 
 var flipPancakes = function(caseNumber, S) {
     var numberOfFlips            = 0;
-    var pileOfPancakes           = S.substring(0, S.length - 3);
-    var numberOfConsecutiveFlips = parseInt(S.slice(-1));
+    var pileOfPancakes           = S.split(' ')[0];
+    var numberOfConsecutiveFlips = parseInt(S.split(' ')[1]);
 
-    if (pileOfPancakes.length > numberOfConsecutiveFlips) {
+    if (pileOfPancakes.length >= numberOfConsecutiveFlips) {
         for (var index = 0; index < pileOfPancakes.length; index++) {
             var currentPancake = pileOfPancakes[index];
 
@@ -42,10 +42,15 @@ var flipPancakes = function(caseNumber, S) {
                 numberOfFlips++;
 
                 for (var offset = index; offset < index + numberOfConsecutiveFlips; offset++) {
-                    var tempPancakes     = pileOfPancakes.split('');
-                    tempPancakes[offset] = tempPancakes[offset] === '+' ? '-' : '+';
+                    if (offset <= pileOfPancakes.length - 1) {
+                        var tempPancakes     = pileOfPancakes.split('');
+                        tempPancakes[offset] = tempPancakes[offset] === '+' ? '-' : '+';
 
-                    pileOfPancakes = tempPancakes.join('');
+                        pileOfPancakes = tempPancakes.join('');
+                    } else {
+                        numberOfFlips = 'IMPOSSIBLE';
+                        break;
+                    }
                 }
             }
         }
@@ -58,11 +63,11 @@ var flipPancakes = function(caseNumber, S) {
     }
 }
 
-var printResult = function(caseNumber, numberOfFlips) {
-    var resultString = 'Case #' + caseNumber + ': ' + numberOfFlips;
+var printResult = function(caseNumber, result) {
+    var resultString = 'Case #' + caseNumber + ': ' + result;
 
-    fs.appendFileSync('./' + fileName + '.out', resultString + '\n');
-    console.log('Case #' + caseNumber + ': ' + numberOfFlips);
+    fs.appendFileSync(fileName + '.out', resultString + '\n');
+    console.log('Case #' + caseNumber + ': ' + result);
 }
 
 main();
