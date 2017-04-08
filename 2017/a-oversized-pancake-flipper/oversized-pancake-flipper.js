@@ -6,7 +6,7 @@
 
 var fs = require('fs');
 
-var fileName  = 'A-small-attempt1';
+var fileName  = 'A-large';
 var inputFile = fs.readFileSync(fileName + '.in');
 
 var main = function() {
@@ -31,7 +31,7 @@ var readInputFile = function() {
 
 var flipPancakes = function(caseNumber, S) {
     var numberOfFlips            = 0;
-    var pileOfPancakes           = S.split(' ')[0];
+    var pileOfPancakes           = S.split(' ')[0].split('');
     var numberOfConsecutiveFlips = parseInt(S.split(' ')[1]);
 
     if (pileOfPancakes.length >= numberOfConsecutiveFlips) {
@@ -43,10 +43,7 @@ var flipPancakes = function(caseNumber, S) {
 
                 for (var offset = index; offset < index + numberOfConsecutiveFlips; offset++) {
                     if (offset <= pileOfPancakes.length - 1) {
-                        var tempPancakes     = pileOfPancakes.split('');
-                        tempPancakes[offset] = tempPancakes[offset] === '+' ? '-' : '+';
-
-                        pileOfPancakes = tempPancakes.join('');
+                        pileOfPancakes[offset] = pileOfPancakes[offset] === '+' ? '-' : '+';
                     } else {
                         numberOfFlips = 'IMPOSSIBLE';
                         break;
@@ -57,9 +54,7 @@ var flipPancakes = function(caseNumber, S) {
 
         printResult(caseNumber, numberOfFlips);
     } else {
-        var impossible = (pileOfPancakes.indexOf('-') !== -1);
-
-        printResult(caseNumber, impossible ? 'IMPOSSIBLE' : 0);
+        printResult(caseNumber, ('-' in pileOfPancakes) ? 'IMPOSSIBLE' : 0);
     }
 }
 
