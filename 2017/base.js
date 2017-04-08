@@ -22,7 +22,7 @@ var main = function() {
 var readInputFile = function() {
     var lines = inputFile.toString().split('\n');
 
-    for (var caseNumber = 1; caseNumber < lines.length; caseNumber++) {
+    for (var caseNumber = 1; caseNumber < lines.length - 1; caseNumber++) {
         var S = lines[caseNumber];
 
         // function(caseNumber, S);
