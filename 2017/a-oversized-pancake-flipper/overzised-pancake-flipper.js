@@ -10,22 +10,13 @@ var fileName  = 'A-example';
 var inputFile = fs.readFileSync(fileName + '.in');
 
 var main = function() {
-    clearOldOutputFile(function() {
-        var startTime = new Date();
+    fs.existsSync(fileName + '.out') && fs.unlinkSync(fileName + '.out');
 
-        console.log('Flipping pancakes ...');
-        readInputFile();
-        console.log('Done! (Finished in ' + (new Date() - startTime) + 'ms)');
-    });
-}
-
-var clearOldOutputFile = function(callback) {
-    var filePath = './' + fileName + '.out';
-
-    fs.exists(filePath, function(exists) {
-        exists && fs.unlink(filePath);
-        callback();
-    });
+    var startTime = new Date();
+    console.log('Flipping pancakes ...');
+    readInputFile();
+    var endTime = new Date();
+    console.log('Done! (Finished in ' + (endTime - startTime) + 'ms)');
 }
 
 var readInputFile = function() {
