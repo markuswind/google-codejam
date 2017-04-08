@@ -14,7 +14,9 @@ var main = function() {
 
     var startTime = new Date();
     console.log('...');
+
     readInputFile();
+
     var endTime = new Date();
     console.log('Done! (Finished in ' + (endTime - startTime) + 'ms)');
 }

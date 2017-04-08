@@ -14,7 +14,9 @@ var main = function() {
 
     var startTime = new Date();
     console.log('Calculating last tidy numbers ...');
+
     readInputFile();
+
     var endTime = new Date();
     console.log('Done! (Finished in ' + (endTime - startTime) + 'ms)');
 }
