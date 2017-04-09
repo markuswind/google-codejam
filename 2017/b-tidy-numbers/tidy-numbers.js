@@ -6,7 +6,7 @@
 
 var fs = require('fs');
 
-var fileName  = 'B-small-attempt0';
+var fileName  = 'B-large';
 var inputFile = fs.readFileSync(fileName + '.in');
 
 var main = function() {
@@ -36,27 +36,39 @@ var getLastTidyNumber = function(caseNumber, N) {
     var finished   = false;
 
     while (!finished) {
-        var numberArray = lastNumber.toString().split('');
+        var wrongIndex = getWrongIndex(lastNumber);
 
-        if (numberArray.length > 1) {
-            for (var index = 0; index < numberArray.length - 1; index++) {
-                var currentSelectedNumber = parseInt(numberArray[index]);
-                var nextSelectedNumber    = parseInt(numberArray[index + 1]);
-                var isLastIteration       = (index + 1 === numberArray.length - 1);
-
-                if (currentSelectedNumber > nextSelectedNumber) {
-                    lastNumber--;
-                    break;
-                } else if (isLastIteration) {
-                    finished = true;
-                }
-            }
-        } else {
+        if (wrongIndex === 0) {
+            printResult(caseNumber, lastNumber);
             finished = true;
+        } else {
+            lastNumber = lastNumber - (lastNumber % Math.pow(10, wrongIndex));
+            lastNumber--;
         }
+
+        finished = (lastNumber < 0) ? true : finished;
+    }
+}
+
+var getWrongIndex = function(number) {
+    var previousNumber = 10;
+    var skippedIndex   = 0;
+    var wrongIndex     = 0;
+
+    while(number > 0) {
+        var lastNumber        = number % 10;
+        var stringifiedNumber = number.toString();
+
+        wrongIndex     = (lastNumber > previousNumber) ? skippedIndex : wrongIndex;
+        previousNumber = lastNumber
+
+        number         = (number > 10000) ? parseInt(stringifiedNumber.substring(0, stringifiedNumber.length - 1)) : Math.floor(number / 10);
+
+        skippedIndex++;
     }
 
-    printResult(caseNumber, lastNumber);
+    console.log('wrongIndex', wrongIndex);
+    return wrongIndex;
 }
 
 var printResult = function(caseNumber, numberOfFlips) {
