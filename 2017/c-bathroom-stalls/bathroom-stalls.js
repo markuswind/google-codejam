@@ -6,7 +6,7 @@
 
 var fs = require('fs');
 
-var fileName  = 'C-small-1-attempt0';
+var fileName  = 'C-small-2-attempt0';
 var inputFile = fs.readFileSync(fileName + '.in');
 
 var main = function() {
@@ -33,7 +33,7 @@ var readInputFile = function() {
 }
 
 var calculateYandZ = function(caseNumber, N, K) {
-    if (N !== K) {
+    if ((N !== K) && (K < (N / 2))) {
         var stalls = [N];
 
         for (var currentPerson = 0; currentPerson < K; currentPerson++) {
@@ -47,12 +47,21 @@ var calculateYandZ = function(caseNumber, N, K) {
                 stalls[preferredLocation] = parseInt(stalls[preferredLocation] / 2);
                 stalls.splice(preferredLocation, 0, stalls[preferredLocation]);
             }
+
+            // stalls = getArrayWithUniqueValues(stalls);
         }
 
         printResult(caseNumber, maxStalls, Math.min.apply(Math, stalls));
     } else {
         printResult(caseNumber, 0, 0);
     }
+}
+
+var getArrayWithUniqueValues = function(array) {
+    return array.reduce(function(a, b) {
+        if (a.indexOf(b) < 0) a.push(b);
+        return a;
+    }, []);
 }
 
 var printResult = function(caseNumber, y, z) {
